@@ -1,7 +1,7 @@
 Clothes Parsing
 ===============
 
-OVERVIEW
+Overview
 --------
 
 This code provides an implementation of the research paper:
