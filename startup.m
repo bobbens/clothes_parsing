@@ -7,6 +7,5 @@ function startup
          addpath(fullfile(root, 'lib', d.name));
       end
    end
-   addpath(fullfile(root,'tasks'));
    addpath(fullfile(root,'lib/SelectiveSearchCodeIJCV/Dependencies'));
 end
