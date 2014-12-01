@@ -47,21 +47,22 @@ In order to get started first checkout out the source code and then extract the
 features:
 
 ```
-    # Check out the git and cd into it as working directory
-    git clone https://github.com/bobbens/clothes_parsing.git
-    cd clothes_parsing
-    # Get and unpack the necessary features
-    wget http://www.iri.upc.edu/people/esimo<%= item_named('/data/poseseg/').path%>
-    tar xvjf poseseg.tar.bz2 
+# Check out the git and cd into it as working directory
+git clone https://github.com/bobbens/clothes_parsing.git
+cd clothes_parsing
+# Get and unpack the necessary features
+wget http://www.iri.upc.edu/people/esimo<%= item_named('/data/poseseg/').path%>
+tar xvjf poseseg.tar.bz2 
 ```
 
 The
 [dSP](http://www.alexander-schwing.de/projectsGeneralStructuredPredictionLatentVariables.php)
 dependency must also be compiled. This can be done by:
 
-    #!bash
-    cd lib/dSP_5.1
-    make # First edit the Makefile if necessary
+```
+cd lib/dSP_5.1
+make # First edit the Makefile if necessary
+```
 
 Usage
 -----
@@ -69,45 +70,45 @@ Usage
 You can reproduce results simply by running from Matlab:
 
 ```
-    sm = segmodel( 'PROFILE', '0.16', 'use_real_pose', false ); % Load the model, parameters can be set here
-    sm = sm.train_misc_unaries(); % Trains some misc stuff
-    sm = sm.train_MRF(); % Actually sets up and trains the CRF
-    R = sm.test_MRF_segmentation() % Performs testing and outputs results
+sm = segmodel( 'PROFILE', '0.16', 'use_real_pose', false ); % Load the model, parameters can be set here
+sm = sm.train_misc_unaries(); % Trains some misc stuff
+sm = sm.train_MRF(); % Actually sets up and trains the CRF
+R = sm.test_MRF_segmentation() % Performs testing and outputs results
 ```
 
 This should generate an output like:
 
 ```
-    BUILDING MRF OUTPUT 29 CLASSES (REAL POSE=0)...
-    UNARIES:
-       bgbias
-       logreg:       29
-       cpmc_logreg:  29
-       cpmc
-       shapelets
-    HIGHER ORDER
-       similarity
-       limbs
-    Initializing Image 011 / 350...   0.4 seconds!   
+ BUILDING MRF OUTPUT 29 CLASSES (REAL POSE=0)...
+ UNARIES:
+    bgbias
+    logreg:       29
+    cpmc_logreg:  29
+    cpmc
+    shapelets
+ HIGHER ORDER
+    similarity
+    limbs
+ Initializing Image 011 / 350...   0.4 seconds!   
 
-    ...
+ ...
 
-    Tested MRF in 319.0 seconds
-    350 / 350... 
+ Tested MRF in 319.0 seconds
+ 350 / 350... 
 
-    R = 
+ R = 
 
-        confusion: [29x29 double]
-        order: [29x1 double]
-        acc: 0.8432
-        pre: [29x1 double]
-        rec: [29x1 double]
-        f1: [29x1 double]
-        voc: [29x1 double]
-        avr_pre: 0.3007
-        avr_rec: 0.3292
-        avr_f1: 0.3039
-        avr_voc: 0.2013
+     confusion: [29x29 double]
+     order: [29x1 double]
+     acc: 0.8432
+     pre: [29x1 double]
+     rec: [29x1 double]
+     f1: [29x1 double]
+     voc: [29x1 double]
+     avr_pre: 0.3007
+     avr_rec: 0.3292
+     avr_f1: 0.3039
+     avr_voc: 0.2013
 ```
 
 Please note that due to stochastic components and differences between software
@@ -148,7 +149,7 @@ The different codes we have used (in alphabetical order):
 Changelog
 ---------
 
-September 2014: Initial version 1.0 release
+December 2014: Initial version 1.0 release
 
 
 
