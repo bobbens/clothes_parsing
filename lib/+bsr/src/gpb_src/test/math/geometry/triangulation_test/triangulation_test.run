@@ -1,0 +1,7 @@
+#!/bin/bash
+
+point_sets=$(ls point_sets/*.node)
+for i in $point_sets; do
+   base=$(echo $i | cut -d '.' -f1 | cut -d '/' -f2)
+   ./triangulation_test < $i >& results/triangulation_test/${base}.ele
+done

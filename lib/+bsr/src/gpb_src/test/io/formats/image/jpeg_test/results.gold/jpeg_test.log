@@ -1,0 +1,8 @@
+processing: images/test_color.jpg
+   color image
+   size: 250 x 333
+   wrote copy to: results/jpeg_test/test_color.out.jpg
+processing: images/test_grayscale.jpg
+   grayscale image
+   size: 250 x 333
+   wrote copy to: results/jpeg_test/test_grayscale.out.jpg

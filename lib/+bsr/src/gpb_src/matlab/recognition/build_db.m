@@ -1,0 +1,23 @@
+% read training set into memory and create search structure
+function build_db( ...
+   train, ...
+   ftype)
+
+% read features, add to database
+for n = 1:length(train.filenames)
+   msg = ['added training file ' num2str(n) ' of ' num2str(length(train.filenames))];
+   % load exemplar
+   [features, x_pos, y_pos] = load_exemplar(train.filenames{n}, ftype);
+   % add exemplar to database
+   add_exemplar( ...
+      features, ...
+      x_pos, ...
+      y_pos, ...
+      train.class_id(n) ...
+   );
+   disp(msg);
+end
+
+% build search structure
+disp('building search structure...');
+mex_category_db('build_db');

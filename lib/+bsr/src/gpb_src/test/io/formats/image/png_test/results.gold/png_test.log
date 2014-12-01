@@ -1,0 +1,10 @@
+processing: images/test_color.png
+   color image
+   alpha channel: no
+   size: 250 x 333
+   wrote copy to: results/png_test/test_color.out.png
+processing: images/test_grayscale.png
+   grayscale image
+   alpha channel: no
+   size: 250 x 333
+   wrote copy to: results/png_test/test_grayscale.out.png

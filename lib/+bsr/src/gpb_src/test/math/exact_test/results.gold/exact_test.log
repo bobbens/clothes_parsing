@@ -1,0 +1,33 @@
+epsilon (relative error bound) = 1.11022e-16
+
+--- double precision arithmetic ---
+small = 1.20398e-204
+large = 1.20398e+204
+sum = 1.20398e+204
+sum - small = 1.20398e+204
+sum - large = 0
+diff = 1.20398e+204
+diff + small = 1.20398e+204
+large - diff = 0
+prod = 1.44958
+
+--- exact arithmetic ---
+small = 1.20398e-204
+large = 1.20398e+204
+sum = 1.20398e+204
+sum - small = 1.20398e+204
+sum - large = 1.20398e-204
+diff = 1.20398e+204
+diff + small = 1.20398e+204
+large - diff = 1.20398e-204
+prod = 1.44958
+
+--- more exact arithmetic ---
+x = 2.23423e+156 [5 term(s)]
+compressing x
+x = 2.23423e+156 [4 term(s)]
+compresson passed
+a*b = 311 [1 term(s)]
+compressing ab
+a*b = 311 [1 term(s)]
+a*b == 311 (true)

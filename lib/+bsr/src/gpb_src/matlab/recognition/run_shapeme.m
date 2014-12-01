@@ -1,0 +1,11 @@
+r = 0.4;
+[train, test] = create_train_test('/home/mmaire_data/caltech101_gb_pb_pca','/home/mmaire_data/caltech101_resized',15,15);
+train_shape = train;
+train_shape.filenames     = train_shape.filenames(1:15:end);
+train_shape.filenames_img = train_shape.filenames_img(1:15:end);
+train_shape.class_id      = train_shape.class_id(1:15:end);
+train_shape.model_id      = train_shape.model_id(1:15:end);
+train_shape.n_train_per_class = 1;
+build_vocab_shapeme(train_shape,'pca');
+build_db_shapeme(train,'pca',r);
+[cmx, score] = run_test_shapeme(train,test,'pca');

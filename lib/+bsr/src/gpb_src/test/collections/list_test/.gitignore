@@ -1,0 +1,7 @@
+Makefile
+Rules.make
+results
+*.d
+*.do
+*.o
+list_test

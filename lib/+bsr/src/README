@@ -1,0 +1,36 @@
+Follow these steps to compile the grouping software from source code:
+
+(i)   Edit the file    gpb_src/Rules.make
+
+      Edit the following line in Rules.make to point to the directory where matlab 
+      is installed (example given below):
+
+      MATLAB_PATH := /opt/matlab-r2010a
+
+      Also, if you are using a 32-bit instead of a 64-bit architecture, uncomment
+      the lines specifying 32-bit architecture and comment the lines specifying
+      64-bit:
+
+      # matlab mex file compilation settings - matlab architecture (32-bit machines)
+      MATLAB_ARCH := glnx86
+      MEX_EXTN := mexglx
+
+      # matlab mex file compilation settings - matlab architecture (64-bit machines)
+      #MATLAB_ARCH := glnxa64
+      #MEX_EXTN := mexa64
+
+(ii)  For Mac OSX 64-bit:
+         In gpb_src/Rules.make, uncomment the OSX specific definitions of:
+         CXX_BUILD, MATLAB_ARCH, MEX_EXTN, MEX_LDFLAGS (and comment the default definitions)
+
+         Likewise, in buildW/Makefile, uncomment the OSX specific definition of CXX
+
+(iii) Type the following commands:
+
+         source build.sh
+
+      This script should build all the packages and copy the resulting .mex files
+      into the ../lib directory.
+
+You should now be able to run the example.m file which computes global Pb
+on an example image.

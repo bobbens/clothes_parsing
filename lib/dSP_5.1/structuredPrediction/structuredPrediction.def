@@ -1,0 +1,2 @@
+LIBRARY	"structuredPrediction"
+EXPORTS mexFunction

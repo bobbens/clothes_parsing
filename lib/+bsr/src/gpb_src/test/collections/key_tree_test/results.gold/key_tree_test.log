@@ -1,0 +1,4 @@
+list = 10 20 80 40 50 70 90 5 
+key tree = 5 10 20 40 50 70 80 90 
+searching key tree... 5 50 10 20 80 40 70 90 
+item not found in key_tree: 100

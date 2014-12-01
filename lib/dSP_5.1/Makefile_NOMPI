@@ -1,0 +1,47 @@
+#update the path variables according to your needs and choose CFLAGS to compile respective versions of the programs
+
+MATLABHOME	= /site/opt/matlab/r2012b/x64
+#MATLABHOME = /opt/matlab
+MEXSUFFIX	= mexa64
+CC	= g++
+CFLAGS	= -std=c++98 -pedantic -W -Wall -fopenmp -O3 -fPIC
+#CFLAGS	+= -DWITH_FLOAT
+#CFLAGS	+= -DWITH_PARALLELINF
+#CFLAGS	+= -DWITH_NOPARALLEL
+
+#no changes should be required below this line
+
+MEXFLAGS	= -cxx CC='$(CC)' CXX='$(CC)' LD='$(CC)'
+MEX	= $(MATLABHOME)/bin/mex
+INCLUDE	= -I$(MATLABHOME)/extern/include
+
+all:
+	make prog_dSP
+	make structuredPrediction.$(MEXSUFFIX)
+
+clean:
+	rm -f *.a
+	rm -f *.o
+	rm -f *.$(MEXSUFFIX)
+	rm -f prog_dSP
+
+libRegionBPP.a: libRegionBPP/libRegionBPP.h libRegionBPP/libRegionBPP.cpp libRegionBPP/DataContainers.h GeneralDefinitions.h
+	$(CC) libRegionBPP/libRegionBPP.cpp -c $(CFLAGS)
+	ar rcs libRegionBPP.a libRegionBPP.o
+
+libSPRegion.a: libSPRegion/libSPRegion.h libSPRegion/libSPRegion.cpp libSPRegion/Instantiation.cpp libSPRegion/libSPBase.h GeneralDefinitions.h
+	$(CC) libSPRegion/libSPRegion.cpp libSPRegion/Instantiation.cpp -c $(CFLAGS)
+	ar rcs libSPRegion.a libSPRegion.o Instantiation.o
+
+libDH.a: libDH/libDHBase.h libDH/libDHStandard.h libDH/libDHStandard.cpp GeneralDefinitions.h
+	$(CC) libDH/libDHStandard.cpp -c $(CFLAGS)
+	ar rcs libDH.a libDHStandard.o
+
+prog_dSP: Test_dSP/Test_dSP.cpp GeneralDefinitions.h libRegionBPP.a libSPRegion.a libDH.a
+	$(CC) Test_dSP/Test_dSP.cpp -o prog_dSP $(CFLAGS) -L. -lSPRegion -lDH -lRegionBPP
+
+structuredPrediction.o: structuredPrediction/structuredPrediction.cpp GeneralDefinitions.h
+	$(CC) $(CFLAGS) -static $(INCLUDE) -c structuredPrediction/structuredPrediction.cpp
+
+structuredPrediction.$(MEXSUFFIX): structuredPrediction.o libRegionBPP.a libSPRegion.a libDH.a
+	$(MEX) -v $(MEXFLAGS) -output structuredPrediction structuredPrediction.o -L. -lSPRegion -lDH -lRegionBPP -lgomp

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+images=$(ls images/*.png)
+for i in $images; do
+   base=$(echo $i | cut -d '.' -f1 | cut -d '/' -f2)
+   ./png_test $i results/png_test/${base}.out.png
+done

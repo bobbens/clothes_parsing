@@ -1,0 +1,62 @@
+*** Instructions for building global Pb from source code. ***
+
+To compile global Pb from source, you will need to download 3 packages:
+
+(1) The current globalPb distribution with precompiled mex files.
+    http://www.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/gpb/globalPb.tar.gz
+    You will still need the scripts from this package even though we are replacing the 
+    mex files.
+
+(2) This package, containing source code for the mex files, which you downloaded from:
+    http://www.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/gpb/gpb_src.tar.gz
+    You will replace the mex files in (1) with those you compile from this source.
+
+(3) The Berkeley Segmentation Engine (BSE)
+    http://www.cs.berkeley.edu/~fowlkes/BSE/
+    You will replace the "segment" program in (1) with the "segment" program compiled
+    from the BSE source.
+
+Next, follow steps A, B, and C below.
+
+-- STEP A --
+To build the mex files from (2) (this package):
+
+(i)   Edit Rules.make
+
+      Edit the following line in Rules.make to point to the directory where matlab 
+      is installed (example given below):
+
+      MATLAB_PATH := /usr/sww/pkg/matlab-r2007a
+
+      Also, if you are using a 32-bit instead of a 64-bit architecture, uncomment
+      the lines specifying 32-bit architecture and comment the lines specifying
+      64-bit:
+
+      # matlab mex file compilation settings - matlab architecture (32-bit machines)
+      MATLAB_ARCH := glnx86
+      MEX_EXTN := mexglx
+
+      # matlab mex file compilation settings - matlab architecture (64-bit machines)
+      #MATLAB_ARCH := glnxa64
+      #MEX_EXTN := mexa64
+
+(ii)  Type the following make commands:
+
+      make
+      make matlab
+
+(iii) The mex files needed for globalPb can be found in the matlab/segmentation/
+      subdirectory.  Copy these .mexa64 (or .mexglx for 32-bit) files into the 
+      lib/ subdirectory of package (1), replacing the precompiled mex files.
+
+-- STEP B --
+To build the segment program from (3):
+
+(i)   Follow the instructions included in (3) for compiling from source.
+
+(ii)  Copy the "segment" executable into the lib/ subdirectory of (1), 
+      replacing the precompiled "segment" executable.
+
+-- STEP C --
+You should now be able to run the example.m file in (1), which computes global Pb
+on an example image.

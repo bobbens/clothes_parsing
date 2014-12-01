@@ -1,0 +1,179 @@
+=======================================================
+--    distributed Structured Prediction (dSP) [1]    --
+=======================================================
+
+Content:
+1. Installing
+2. Executing
+3. References
+
+
+=======================================================
+
+1. Installing
+-------------
+1.1 Dependencies
+----------------
+To compile the sources we recommend an implementation of the Message Passing Interface (MPI) API. Only a subset of programs can be compiled without this library.
+
+We refer the interested reader to [2] for a brief overview about MPI. On Windows we commonly use MPICH2 [3] and on Linux/Mac we applied OpenMPI [4] and MPICH2.
+
+Please follow the respective instructions to set up the MPI implementation of your choice. On Linux systems this is often as simple as calling
+
+$ sudo apt-get -install libopenmpi-dev
+
+
+1.2 Package content
+-------------------
+The package contains two Makefiles. Whereas the standard `Makefile' assumes existence of an MPI library, `Makefile_NOMPI' can be used to compile those parts of the package that don't depend on MPI. Please rename the files if you intend to compile without linking to MPI libraries.
+
+The dSP package containes three programs (prog_dSP (no MPI dependence), prog_mdSP and prog_dLSP) and two matlab mex functions (structuredPrediction.mexa64 (no MPI dependence) and latentStructuredPrediction.mexa64). While prog_dSP runs structured prediction on a single machines with possibly multiple cores, prog_mdSP is employed in cluster environments. prog_dLSP implements structured prediction with latent variables (LSP) and -- depending on the compiler flags -- it is either suitable for single machines or clusters of computers. The two mex functions are only suitable to be run on a single machine. We explain the compiler flags in the following:
+
+-DWITH_FLOAT (affects prog_dSP, prog_mdSP and prog_dLSP): the algorithms are compiled to run with single precision accuracy rather than standard double precision floating points. This may be useful in environments with limited memory. Note that the mex functions are always compiled with double precision accuracy since we reuse the features provided by matlab.
+
+-DWITH_LATENTCLUSTER (affects prog_dLSP): if set, the latent structured prediction algorithm is compiled to distribute the samples over the machines within the cluster. Note that it is not supported to divide the model of a sample onto multiple machines.
+
+-DWITH_PARALLELINF (affects prog_dSP, prog_mdSP and prog_dLSP if -DWITHLATENTCLUSTER is not set and the mex functions): employs graph coloring to run message passing, i.e., inference in parallel. Note that this turns off processing samples in parallel either on multiple machines or on multiple cores. This setting has to be used for prog_mdSP if the model of a sample should be distributed onto multiple machines.
+
+-DWITH_NOPARALLEL (affects prog_dSP and prog_dLSP if -DWITHLATENTCLUSTER is not set and the mex functions): if set, any form of parallel computation is turned off.
+
+
+1.3 Compiling dSP
+-----------------
+1.3.1 Linux/Mac
+---------------
+To avoid setting the preprocessor and linker variables we use the compiler wrapper provided by [3,4]. Its name is mpic++ and it resides in the bin directory of your MPI implementation.
+
+Edit the first few lines of the Makefile to point to the directories indicated by the variables. If the environment variables on your system are set appropriately, it is only required to adapt the path to the matlab directory to successfully compile the mex functions.
+
+Choose the respective compiler flags mentioned above by uncommenting corresponding lines.
+
+cd to the directory containing the dSP sources and in particular the Makefile. Then type
+
+$ make clean
+$ make
+
+which should result in the aforementioned three executables and the two matlab mex functions.
+
+
+1.3.2 Windows
+-------------
+For convenience we provide a Microsoft Visual Studio 2008 solution file. Before compiling we need to specify one environment variable.
+
+Go to the Systems settings in the Control panel and choose Advanced Systems Settings. Hit the 'Environment Variables' button and add a user variable for your account by hitting the 'New' button. As a variable name use
+
+LIB_MPI
+
+and let it point to the installation folder of the MPI API, e.g.
+
+C:\Program Files\MPICH2
+
+Open the Visual Studio Solution after(!) setting the environment variable and compile as usual for the configuration of your choice (Debug/Release and Win32/x64). Note that the two mex function projects use the same source file. Also note that most likely you need to adapt the "Additional Include Directories" and "Additional Library Directories" to point to respective matlab folders.
+
+
+=======================================================
+
+2. Executing
+------------
+Also see the documentation within the Documentation folder for further details.
+
+2.1 First steps
+---------------
+After compiling successfully you should be able to run
+
+$ ./prog_dSP
+
+to run structured prediction on the example provided in the Data01 folder. The result should be identical when running latent structured prediction via
+
+$ ./prog_dLSP
+
+How to distribute this task onto two machines within a cluster depends on your computer setup. Without a job scheduler the command might read similar to
+
+$ mpiexec -N 2 ./prog_mdSP
+
+With a job scheduler like SLURM the command looks like
+
+$ srun -N 2 ./prog_mdSP
+
+Again the output should be identical to the previous two runs.
+
+
+2.2 A first Matlab example
+--------------------------
+In the Matlab folder we provide an example ``Example01.m'' to test the mex functions. In addition we provide the function ``WriteOutput'' which takes the matlab data structure and converts it to the text format readable by prog_dSP, prog_dLSP and prog_mdSP. This is useful if you want to test your application in matlab on small examples and convert the final graphical model to files to be read by the program on a cluster.
+
+Open ``Example01.m'', modify the addpath command to point to the directory with the mex functions and choose whether to use the release or debug version. The obtained weight vector w should be identical to the weight vector returned by the three programs used in Section 2.1. In addition you should find four files in the Matlab folder which are identical to the ones within the Data01 folder. Those text files are the input data to the programs.
+
+For larger data sets we also designed a binary file format which supports sharing of features for increased memory efficiency. Its use and details about the file formats are beyond the scope of this introduction. We refer the reader to the documentation.
+
+
+2.3 Parameters
+--------------
+2.3.1 Executables
+-----------------
+The parameters are given to the program via ``<flag> <NumberOrString>'' and the possible flags with their explanation are given in the following:
+
+-a: Armijo iterations      - how many Armijo iterations to perform
+
+-b: Bethe counting numbers - whether to use bethe counting numbers for the latent variable model. The counting numbers for structured prediction are always specified within the input files
+
+-c: C                      - regularization parameter C used in the equations
+
+-e: Epsilon                - smoothness/temperature parameter epsilon used in the equations
+
+-f: CRFEraseMessages       - whether to erase the messages after every iteration. Useful if you want to learn CRFs or structured Support Vector Machines the traditional way.
+
+-i: CCCPIterations         - how many CCCP iterations to perform when training with latent variables
+
+-j: CRFIterations          - how many CRF iterations during one CCCP iteration
+
+-k: CRFMPIterations        - how many message passing iterations during one CRF iteration
+
+-m: MPIterations           - how many message passing iterations during inference
+
+-o: CRFOuterIterations     - how often to exchange messages between computers for computation of the gradient or inference when distributing the model onto multiple machines
+
+-p: p                      - regularization parameter p used in the equations
+
+-r: ReuseMessagesForF      - whether to reuse the previously computed messages during the Armijo iterations or whether to go with the traditional approach, i.e., perform inference again
+
+-v: inference verbosity    - 0: no unnecessary computations, 1: output time but no computation, 2: computation of primal and dual, 3: computation as well as output of primal and dual
+
+-x: CRFOuterExchange       - every how many iterations should messages between computers be exchanged if the model is divided onto multiple machines
+
+-y: Binary format          - use the binary input format
+
+
+
+-d: directory              - which directory to get the data from
+
+-t: task                   - which task to execute 0: just learning, 1: learning and inference, 2: just inference
+
+-w: weight vector file     - file that contains information on how to initialize the weight vector
+
+-l: leave file             - output file, i.e., which file to store the result in (weight vector and prediction result)
+
+
+2.3.2 Matlab mex functions
+--------------------------
+The matlab mex functions take four parameters:
+
+Samples: A data structure that contains the graphical model.
+Params:  Specifies the parameters of the algorithm. See the algorithm output for the names of the parameters to be specified. The explanation is given in Section 2.3.1.
+task:    Indicates whether to run just learning (task = 0), learning and inference on the same examples (task = 1) or just inference (task = 2).
+w_init:  A weight vector to be used for initialization during learning (task = 0, task = 1) or for inference (task = 2)
+
+The matlab mex functions return two outputs:
+w:          The learned weight vector. Note that w = w_init if task = 2.
+Prediction: The prediction result, i.e., the beliefs of all the regions.
+
+
+=======================================================
+
+3. References
+-------------
+
+[1] http://www.alexander-schwing.de
+[2] http://en.wikipedia.org/wiki/Message_Passing_Interface
+[3] http://www.mcs.anl.gov/research/projects/mpich2/
+[4] http://www.open-mpi.org

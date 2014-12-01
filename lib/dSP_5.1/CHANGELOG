@@ -1,0 +1,20 @@
+Please eMail requests for features and bug reports to address given on http://alexander-schwing.de
+
+Version 5.1 (released on August 5, 2013)
+- supports sparse feature vectors and sparse loss functions
+- detects sparse features in text and binary input files
+- adds access to single precision accuracy implementations when using the mex function
+- adds functions to export or plot the Hasse diagram/factor graph via Matlab
+- improves detection of incorrect mex function input 
+
+Version 5.0 (released on June 21, 2013)
+- First Public Release
+- provides algorithms for inference and learning of structured predictors (with and without latent variables)
+- access to algorithms via textual or binary file formats, a mex function for Matlab or directly via C++ libraries
+- supports inference and learning with arbitrary Hasse diagrams and factor graphs
+- supports arbitrary counting numbers
+- considers both shared and distributed memory environments (high performance computing)
+- single and double precision accuracy support (not via mex function)
+- no dependency besides standard library and MPI for some algorithms
+
+All earlier versions were internal or were used by a restricted set of people.

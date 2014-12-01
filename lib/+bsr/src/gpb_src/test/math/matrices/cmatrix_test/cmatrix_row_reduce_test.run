@@ -1,0 +1,2 @@
+#!/bin/bash
+./cmatrix_row_reduce_test

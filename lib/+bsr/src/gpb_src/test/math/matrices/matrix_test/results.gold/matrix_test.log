@@ -1,0 +1,235 @@
+matrix: [3 x 2] (6 element(s))
+          0.1       0.02
+            1          2
+           10         30
+matrix: [5 x 1] (5 element(s))
+         -0.5
+        -0.25
+            0
+         0.25
+          0.5
+matrix: [5] (5 element(s))
+         -0.5      -0.25          0       0.25        0.5
+--- convolution 1D (full) ---
+matrix: [9] (9 element(s))
+         0.25       0.25     0.0625      -0.25     -0.625      -0.25     0.0625       0.25       0.25
+--- convolution 1D (cropped) ---
+matrix: [5] (5 element(s))
+       0.0625      -0.25     -0.625      -0.25     0.0625
+--- convolution 1D (cropped strict) ---
+matrix: [1] (1 element(s))
+       -0.625
+--- convolution 2D (full) ---
+matrix: [5 x 3] (15 element(s))
+         0.01      0.004     0.0004
+          0.2       0.44       0.08
+            3       10.4        5.2
+           20        100        120
+          100        600        900
+matrix: [4 x 4] (16 element(s))
+         0.01      0.102       1.02        0.2
+        0.102        1.4      15.04       20.6
+         1.02      15.04        164        360
+          0.2       20.6        360        900
+matrix: [7 x 2] (14 element(s))
+        -0.05      -0.01
+       -0.525     -1.005
+        -5.25      -15.5
+       -2.475     -7.495
+          0.3       0.51
+            3        8.5
+            5         15
+matrix: [7 x 2] (14 element(s))
+        -0.05      -0.01
+       -0.525     -1.005
+        -5.25      -15.5
+       -2.475     -7.495
+          0.3       0.51
+            3        8.5
+            5         15
+matrix: [5 x 5] (25 element(s))
+         0.25      0.125          0     -0.125      -0.25
+        0.125     0.0625          0    -0.0625     -0.125
+            0          0          0          0          0
+       -0.125    -0.0625          0     0.0625      0.125
+        -0.25     -0.125          0      0.125       0.25
+--- convolution 2D (cropped) ---
+matrix: [3 x 2] (6 element(s))
+         0.44       0.08
+         10.4        5.2
+          100        120
+matrix: [3 x 2] (6 element(s))
+          1.4      15.04
+        15.04        164
+         20.6        360
+matrix: [3 x 2] (6 element(s))
+        -5.25      -15.5
+       -2.475     -7.495
+          0.3       0.51
+matrix: [5 x 1] (5 element(s))
+       -1.005
+        -15.5
+       -7.495
+         0.51
+          8.5
+matrix: [5 x 1] (5 element(s))
+            0
+            0
+            0
+            0
+            0
+--- convolution 2D (cropped strict) ---
+matrix: [1 x 1] (1 element(s))
+         10.4
+matrix: [2 x 0] (0 element(s))
+matrix: [0 x 2] (0 element(s))
+matrix: [3 x 0] (0 element(s))
+matrix: [5 x 0] (0 element(s))
+--- min, max, sum, prod ---
+matrix: [1 x 2] (2 element(s))
+          0.1       0.02
+matrix: [3 x 1] (3 element(s))
+         0.02
+            1
+           10
+matrix: [1 x 2] (2 element(s))
+           10         30
+matrix: [3 x 1] (3 element(s))
+          0.1
+            2
+           30
+matrix: [1 x 2] (2 element(s))
+         11.1      32.02
+matrix: [3 x 1] (3 element(s))
+         0.12
+            3
+           40
+matrix: [1 x 2] (2 element(s))
+            1        1.2
+matrix: [3 x 1] (3 element(s))
+        0.002
+            2
+          300
+--- cumsum, cumprod ---
+matrix: [3 x 2] (6 element(s))
+          0.1       0.02
+          1.1       2.02
+         11.1      32.02
+matrix: [3 x 2] (6 element(s))
+          0.1       0.12
+            1          3
+           10         40
+matrix: [3 x 2] (6 element(s))
+          0.1       0.02
+          0.1       0.04
+            1        1.2
+matrix: [3 x 2] (6 element(s))
+          0.1      0.002
+            1          2
+           10        300
+--- mean, var ---
+7.18667
+115.854
+matrix: [1 x 2] (2 element(s))
+          3.7      10.67
+matrix: [3 x 1] (3 element(s))
+         0.06
+          1.5
+           20
+matrix: [1 x 2] (2 element(s))
+        19.98      187.4
+matrix: [3 x 1] (3 element(s))
+       0.0016
+         0.25
+          100
+--- gradient ---
+matrix: [2 x 2] (4 element(s))
+          0.9       1.98
+            9         28
+matrix: [3 x 1] (3 element(s))
+        -0.08
+            1
+           20
+--- reverse ---
+matrix: [3 x 2] (6 element(s))
+           10         30
+            1          2
+          0.1       0.02
+matrix: [3 x 2] (6 element(s))
+           30         10
+            2          1
+         0.02        0.1
+--- vertcat, horzcat, concat ---
+matrix: [6 x 2] (12 element(s))
+           30         10
+            2          1
+         0.02        0.1
+           30         10
+            2          1
+         0.02        0.1
+matrix: [3 x 4] (12 element(s))
+           30         10         30         10
+            2          1          2          1
+         0.02        0.1       0.02        0.1
+matrix: [3 x 2 x 1 x 1 x 2] (12 element(s))
+(0,0,0,:,:) =
+           30         30
+(0,1,0,:,:) =
+           10         10
+(1,0,0,:,:) =
+            2          2
+(1,1,0,:,:) =
+            1          1
+(2,0,0,:,:) =
+         0.02       0.02
+(2,1,0,:,:) =
+          0.1        0.1
+--- resize, transpose ---
+matrix: [2 x 2] (4 element(s))
+           30         10
+            2          1
+matrix: [4 x 4] (16 element(s))
+           30         10          0          0
+            2          1          0          0
+         0.02        0.1          0          0
+            0          0          0          0
+matrix: [4 x 4] (16 element(s))
+           30          2       0.02          0
+           10          1        0.1          0
+            0          0          0          0
+            0          0          0          0
+matrix: [1 x 4 x 4] (16 element(s))
+(0,:,:) =
+           30          2       0.02          0
+           10          1        0.1          0
+            0          0          0          0
+            0          0          0          0
+--- repmat ---
+matrix: [6 x 6] (36 element(s))
+           30         10         30         10         30         10
+            2          1          2          1          2          1
+         0.02        0.1       0.02        0.1       0.02        0.1
+           30         10         30         10         30         10
+            2          1          2          1          2          1
+         0.02        0.1       0.02        0.1       0.02        0.1
+--- sort ---
+matrix: [3 x 2] (6 element(s))
+           30         10
+            2          1
+         0.02        0.1
+matrix: [3 x 2] (6 element(s))
+            2          2
+            1          1
+            0          0
+matrix: [3 x 2] (6 element(s))
+         0.02        0.1
+            2          1
+           30         10
+matrix: [3 x 2] (6 element(s))
+            0          1
+            1          0
+            1          0
+matrix: [3 x 2] (6 element(s))
+         0.02        0.1
+            1          2
+           10         30

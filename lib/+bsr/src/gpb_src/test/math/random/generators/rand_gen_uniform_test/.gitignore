@@ -1,0 +1,7 @@
+Makefile
+Rules.make
+results
+*.d
+*.do
+*.o
+rand_gen_uniform_test
