@@ -718,6 +718,7 @@ classdef segmodel
             this.CPMC_PRED = 'poseseg/output/cpmccls_v2.0_fg/preds/%06d.mat';
             this.CPMC_APPROX = 'poseseg/output/cpmccls_v2.0_fg/MySegmentsMat/CPMC_segms_150_sp_approx/%06d.mat';
             this.CPMCFEATS = '/share/data/poseseg/output/cpmccls54_v2.0/SP_gt/MyMeasurements/';
+            this.GTMAPS   = 'poseseg/output/segments_groundtruth_v2/%06d.mat';
          elseif strcmpi( this.PROFILE, 'iccv-0.16' )
             this.use_fashionista_v2 = true;
             this.use_logreg_54      = true;
@@ -734,6 +735,7 @@ classdef segmodel
             this.CPMC_PRED = 'poseseg/output/cpmccls_v2.0_fg/preds/%06d.mat';
             this.CPMC_APPROX = 'poseseg/output/cpmccls_v2.0_fg/MySegmentsMat/CPMC_segms_150_sp_approx/%06d.mat';
             this.CPMCFEATS = '/share/data/poseseg/output/cpmccls54_v2.0/SP_0.16/MyMeasurements/';
+            this.GTMAPS   = 'poseseg/output/segments_groundtruth_v2/%06d.mat';
          elseif strcmpi( this.PROFILE, 'iccv-0.10' )
             this.use_fashionista_v2 = true;
             this.use_logreg_54      = true;
@@ -750,6 +752,7 @@ classdef segmodel
             this.CPMC_PRED = 'poseseg/output/cpmccls_v2.0_fg/preds/%06d.mat';
             this.CPMC_APPROX = 'poseseg/output/cpmccls_v2.0_fg/MySegmentsMat/CPMC_segms_150_sp_approx/%06d.mat';
             this.CPMCFEATS = '/share/data/poseseg/output/cpmccls54_v2.0/SP_0.10/MyMeasurements/';
+            this.GTMAPS   = 'poseseg/output/segments_groundtruth_v2/%06d.mat';
          else
             error( ['Unknown profile ' this.PROFILE] )
          end
