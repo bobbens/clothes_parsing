@@ -1368,6 +1368,7 @@ classdef segmodel
          if nargin < 4;
             ids = this.testids;
          end
+         mkdir( path );
          NUM_CLASSES = numel(this.clothings);
          for i=1:numel(Pred);
             fprintf( '\r%03d / %03d', i, numel(Pred ) );
