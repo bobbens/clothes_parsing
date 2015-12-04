@@ -1362,6 +1362,9 @@ classdef segmodel
       end
 
       function test_MRF_visualize( this, path, Pred, ids )
+         if nargin < 3;
+            Pred = this.test_MRF();
+         end
          if nargin < 4;
             ids = this.testids;
          end
