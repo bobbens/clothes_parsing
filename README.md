@@ -110,6 +110,15 @@ versions, the numbers will not be exactly the same as the paper. For the paper
 all results were obtained on a linux machine running Ubuntu 12.04 with Matlab
 R2012a (7.14.0.739) 64-bit (glnxa64).
 
+You can furthermore visualize the output of the model with:
+
+```
+sm.test_MRF_visualize( 'output/' )
+```
+
+This will save both the ground truth segmentations and the predicted
+segmentations in the directory 'output/' as shown in the paper.
+
 If you use this code please cite:
 
 ```
