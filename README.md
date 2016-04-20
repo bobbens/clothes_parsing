@@ -45,7 +45,7 @@ features:
 git clone https://github.com/bobbens/clothes_parsing.git
 cd clothes_parsing
 # Get and unpack the necessary features
-wget http://www.iri.upc.edu/people/esimo<%= item_named('/data/poseseg/').path%>
+wget http://hi.cs.waseda.ac.jp/~esimo//data/poseseg.tar.bz2
 tar xvjf poseseg.tar.bz2 
 ```
 
